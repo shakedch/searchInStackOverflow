@@ -58,7 +58,6 @@ public class MainActivity extends OptionsMenu implements LocationListener {
             editTextSearch.requestFocus();
             return;
         }
-        progressBar.setVisibility(View.VISIBLE);
         //save the search in the db
         addSearch(keyWord);
     }
@@ -82,30 +81,32 @@ public class MainActivity extends OptionsMenu implements LocationListener {
             // for ActivityCompat#requestPermissions for more details.
 
             Toast.makeText(this, "Please enable location permissions", Toast.LENGTH_LONG).show();
-            return;
         }
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5 * 1000, 5, this);
-        Location mikum = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        final double latitude = mikum.getLatitude();
-        final double longitude = mikum.getLongitude();
+        else {
+            progressBar.setVisibility(View.VISIBLE);
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5 * 1000, 5, this);
+            Location mikum = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            final double latitude = mikum.getLatitude();
+            final double longitude = mikum.getLongitude();
 
-        //TEST האם בכלל נשמר לי נכון
-        System.out.println("latitude: " + latitude + " longitude" + longitude);
-        Toast.makeText(this, "latitude ="+latitude+"longitude = "+longitude, Toast.LENGTH_SHORT).show();
+            //TEST האם בכלל נשמר לי נכון
+            System.out.println("latitude: " + latitude + " longitude" + longitude);
+            Toast.makeText(this, "latitude =" + latitude + "longitude = " + longitude, Toast.LENGTH_SHORT).show();
 
-        //Insert location
-        values.put(DatabaseContract.History.COLUMN_LATITUDE, latitude);
-        values.put(DatabaseContract.History.COLUMN_LONGITUDE, longitude);
+            //Insert location
+            values.put(DatabaseContract.History.COLUMN_LATITUDE, latitude);
+            values.put(DatabaseContract.History.COLUMN_LONGITUDE, longitude);
 
 
-        long newRowID= dbWrite.insert(
-                DatabaseContract.History.TABLE_NAME,
-                null,
-                values
-        );
+            long newRowID = dbWrite.insert(
+                    DatabaseContract.History.TABLE_NAME,
+                    null,
+                    values
+            );
 
-        Toast.makeText(this, "row id ="+newRowID, Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(getApplicationContext(), ResultsActivity.class));
+            Toast.makeText(this, "row id =" + newRowID, Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(), ResultsActivity.class));
+        }
     }
 
 

@@ -1,10 +1,14 @@
 package com.example.stackoverflowsearchapp.adapters;
 
 import android.content.Context;
-        import android.view.LayoutInflater;
+import android.content.Intent;
+import android.net.Uri;
+import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
         import android.widget.TextView;
 
@@ -13,8 +17,10 @@ import android.widget.ImageView;
 
         import com.bumptech.glide.Glide;
         import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.stackoverflowsearchapp.HistoryActivity;
 import com.example.stackoverflowsearchapp.R;
 import com.example.stackoverflowsearchapp.model.Post;
+import com.example.stackoverflowsearchapp.model.Search;
 
 import org.json.JSONException;
 
@@ -52,6 +58,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.PostViewHolder holder, int position) {
+
         // Get the data model based on position
         Post post = postResults.get(position);
 
@@ -69,6 +76,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        holder.postLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(post.getLink()));
+                view.getContext().startActivity(browserIntent);
+            }
+        });
 
     }
 
@@ -91,6 +106,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             postTitle = postView.findViewById(R.id.post_title);
             postLink =  postView.findViewById(R.id.post_link);
             ownerImage =  postView.findViewById(R.id.owner_image);
+
         }
     }
 }

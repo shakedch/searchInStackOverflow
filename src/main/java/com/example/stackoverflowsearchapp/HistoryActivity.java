@@ -22,6 +22,7 @@ import com.example.stackoverflowsearchapp.model.Search;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HistoryActivity extends OptionsMenu {
     private static SQLiteDatabase dbRead;
@@ -83,10 +84,14 @@ public class HistoryActivity extends OptionsMenu {
 
     }
 
-    public static void deleteSearch(String id) {
+    public static void deleteSearch(String id, int adapterPosition, List searchesArray) {
+        searchesArray.remove(adapterPosition);
+        rvSearches.removeViewAt(adapterPosition);
+        Objects.requireNonNull(rvSearches.getAdapter()).notifyItemRemoved(adapterPosition);
+        rvSearches.getAdapter().notifyItemRangeChanged(adapterPosition, searchesArray.size());
+
         String selection = DatabaseContract.History.COLUMN_SEARCH_ID + " LIKE ?";
         String[] selectionArgs = { id };
-
         dbRead.delete(
                 DatabaseContract.History.TABLE_NAME,
                 selection,

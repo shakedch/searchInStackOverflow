@@ -91,15 +91,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             itemView.findViewById(R.id.buttonDelete).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //remove from recycler view
-                    searchHistory.remove(getAdapterPosition());
-                    HistoryActivity.deleteSearch(search.getId(),getAdapterPosition(), searchHistory.size());
-
-                    //remove from recycler view
-                    //searchHistory.remove(getAdapterPosition());
-                   // HistoryActivity.rvSearches.removeViewAt(getAdapterPosition());
-                  //  Objects.requireNonNull(HistoryActivity.rvSearches.getAdapter()).notifyItemRemoved(getAdapterPosition());
-                   // HistoryActivity.rvSearches.getAdapter().notifyItemRangeChanged(getAdapterPosition(), searchHistory.size());
+                    HistoryActivity.deleteSearch(search.getId(),getAdapterPosition(), searchHistory);
                 }
             });
         }
