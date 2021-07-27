@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/small_icon"
+        android:contentDescription="Home Page"
+        app:showAsAction="always"
+        android:title="home page" />
+
+    <item
+        android:id="@+id/history"
+        android:orderInCategory="20"
+        android:title="Search History"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/info"
+        android:orderInCategory="40"
+        android:title="Who are we?"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/homePage"
+        android:orderInCategory="50"
+        android:title="Home page"
+        app:showAsAction="never" />
+
+
+</menu>
+
+
